@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>seatrac</name>
+  <name>seatrac_logger</name>
   <version>1.0.0</version>
   <description>
-    A ROS2 node that publishes Ping and Data messages recieved from the beacon
+    An ROS2 node that publishes Ping and Data messages recieved from the beacon
     and sends Ping and Data messages to the beacon
   </description>
   <maintainer email="claytonsmith3.14@gmail.com">Clayton Smith</maintainer>
