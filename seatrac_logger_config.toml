@@ -1,5 +1,5 @@
 
-[Logger Config] # these are configurations of the test done
+[LoggerConfig] # these are configurations of the test done
 
 test_name   = "MyTest"  # Test name should be the same for all beacons in the test
 num_samples = 5
@@ -12,12 +12,12 @@ use_advanced_usbl = true
     # advanced usbl also uses the depth of the other beacon to calculate position
     # this depth is sent in the acoustic message payload.
 
-[Test Metadata]
+[TestMetadata]
 this_beacon_depth  = nan
 other_beacon_depth = nan
 horizontal_dist    = nan
 
-[Seatrac Config] # These are configurations set to the seatrac driver
+[SeatracConfig] # These are configurations set to the seatrac driver
 
 beacon_id           = 15 # valid ids are 1-15
 env_salinity_ppt    = 0  # 0 ppt for fresh water and 35 ppt for salt water

@@ -178,7 +178,7 @@ toml::ex::parse_result upload_config_settings(SeatracDriver& seatrac, std::strin
     std::cout << "starting upload settings to seatrac beacon" << std::endl;
 
     auto config = toml::parse_file(config_file_path);
-    auto seatrac_config = config["Seatrac Config"];
+    auto seatrac_config = config["SeatracConfig"];
 
     SETTINGS_T settings = command::settings_get(seatrac).settings;
     std::cout << "retrieved current beacon settings. Old settings: " << std::endl
