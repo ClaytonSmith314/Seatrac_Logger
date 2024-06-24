@@ -4,6 +4,8 @@ from rclpy.node import Node
 
 from std_msgs.msg import String
 
+from seatrac_interfaces.msg import ModemSend, ModemRec
+
 
 class SeatracLogger(Node):
 
