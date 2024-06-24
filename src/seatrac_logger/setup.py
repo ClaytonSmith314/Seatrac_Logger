@@ -20,6 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'seatrac_logger = seatrac_logger.seatrac_logger:main'
         ],
     },
 )
