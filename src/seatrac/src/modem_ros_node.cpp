@@ -118,7 +118,7 @@ private:
         req.destId    = static_cast<BID_E>(rosmsg->dest_id);
         req.msgType   = static_cast<AMSGTYPE_E>(rosmsg->msg_type);
         req.packetLen = std::min(rosmsg->packet_len, (uint8_t)sizeof(req.packetData));
-        
+
         std::memcpy(req.packetData, rosmsg->packet_data.data(), req.packetLen);
         RCLCPP_INFO(this->get_logger(), "Seatrac modem broadcasting CID_DAT_SEND message. String is '%s'", req.packetData);
         this->send(sizeof(req), (const uint8_t*)&req);
@@ -138,6 +138,10 @@ private:
 
   //copies the fields from the acofix struct into the ModemRec ros message
   inline void cpyFixtoRosmsg(seatrac_interfaces::msg::ModemRec& msg, ACOFIX_T& acoFix) {
+
+    msg.dest_id = acoFix.destId;
+    msg.src_id  = acoFix.srcId;
+
     msg.attitude_yaw = acoFix.attitudeYaw;
     msg.attitude_pitch = acoFix.attitudePitch;
     msg.attitude_roll = acoFix.attitudeRoll;
