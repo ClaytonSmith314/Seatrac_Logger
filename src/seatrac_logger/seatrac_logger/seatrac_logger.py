@@ -23,8 +23,8 @@ class SeatracLogger(Node):
             time.time()                 +", "+
             self.i                      +", "+
             response.msg_id             +", "+
-            "src_id"                    +", "+ #TODO: include source and dest ids in modem rec and add here
-            "dest_id"                   +", "+
+            response.src_id             +", "+ #TODO: include source and dest ids in modem rec and add here
+            response.dest_id            +", "+
             response.local_flag         +", "+
             response.position_enhanced  +", "+
             response.position_flt_error +", "+
