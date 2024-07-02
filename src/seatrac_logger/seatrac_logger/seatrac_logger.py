@@ -17,32 +17,32 @@ class SeatracLogger(Node):
             "time, msg#, src_id, dest_id, local_flag, position_enhanced, position_flt_error, yaw, pitch, roll, local_depth, VOS, RSSI, usbl_rssi[0], usbl_rssi[1], usbl_rssi[2], usbl_rssi[3], range, azimuth, elevation, easting, northing, depth\n")
         
     def modem_callback(self, response):
-        csv_line = (""+
-            time.time()                 +", "+
-            self.i                      +", "+
-            response.msg_id             +", "+
-            response.src_id             +", "+
-            response.dest_id            +", "+
-            response.local_flag         +", "+
-            response.position_enhanced  +", "+
-            response.position_flt_error +", "+
-            response.attitude_yaw       +", "+
-            response.attitude_pitch     +", "+
-            response.attitude_roll      +", "+
-            response.depth_local        +", "+
-            response.vos                +", "+
-            response.rssi               +", "+
-            response.usbl_rssi[0]       +", "+
-            response.usbl_rssi[1]       +", "+
-            response.usbl_rssi[2]       +", "+
-            response.usbl_rssi[3]       +", "+
-            response.range_dist         +", "+
-            response.usbl_azimuth       +", "+
-            response.usbl_elevation     +", "+
-            response.usbl_fit_error     +", "+
-            response.position_easting   +", "+
-            response.position_northing  +", "+
-            response.position_depth     +"\n"
+        csv_line = (
+            str(time.time())                 +", "+
+            str(self.i)                      +", "+
+            str(response.msg_id)             +", "+
+            str(response.src_id)             +", "+
+            str(response.dest_id)            +", "+
+            str(response.local_flag)         +", "+
+            str(response.position_enhanced)  +", "+
+            str(response.position_flt_error) +", "+
+            str(response.attitude_yaw)       +", "+
+            str(response.attitude_pitch)     +", "+
+            str(response.attitude_roll)      +", "+
+            str(response.depth_local)        +", "+
+            str(response.vos)                +", "+
+            str(response.rssi)               +", "+
+            str(response.usbl_rssi[0])       +", "+
+            str(response.usbl_rssi[1])       +", "+
+            str(response.usbl_rssi[2])       +", "+
+            str(response.usbl_rssi[3])       +", "+
+            str(response.range_dist)         +", "+
+            str(response.usbl_azimuth)       +", "+
+            str(response.usbl_elevation)     +", "+
+            str(response.usbl_fit_error)     +", "+
+            str(response.position_easting)   +", "+
+            str(response.position_northing)  +", "+
+            str(response.position_depth)     +"\n"
         )
         self.output_file.write(csv_line)
 
