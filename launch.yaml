@@ -1,0 +1,17 @@
+
+launch:
+
+- node:
+    pkg:  "seatrac"
+    exec: "modem"
+    name: "modem"
+
+- node:
+    pkg:  "seatrac_logger"
+    exec: "seatrac_logger"
+    name: "seatrac_logger"
+
+- node:
+    pkg:  "seatrac_logger"
+    exec: "seatrac_pinger"
+    name: "seatrac_pinger"

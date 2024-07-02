@@ -12,7 +12,7 @@ class SeatracLogger(Node):
 
         self.i = 0
 
-        self.output_file = open("test_file.csv", 'w')
+        self.output_file = open("logger_data/test_file.csv", 'w')
         self.output_file.write(
             "time, msg#, src_id, dest_id, local_flag, position_enhanced, position_flt_error, yaw, pitch, roll, local_depth, VOS, RSSI, usbl_rssi[0], usbl_rssi[1], usbl_rssi[2], usbl_rssi[3], range, azimuth, elevation, easting, northing, depth\n")
         
