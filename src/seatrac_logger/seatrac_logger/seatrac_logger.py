@@ -2,13 +2,12 @@
 import time
 import rclpy
 from rclpy.node import Node
-from seatrac_interfaces.msg import ModemSend, ModemRec
+from seatrac_interfaces.msg import ModemRec
 
 class SeatracLogger(Node):
 
     def __init__(self):
         super().__init__('logger')
-        self.modem_publisher_  = self.create_publisher(ModemSend, 'modem_send', 10)
         self.modem_subscriber_ = self.create_subscription(ModemRec, 'modem_rec', self.modem_callback, 10)
 
         self.i = 0
@@ -17,13 +16,12 @@ class SeatracLogger(Node):
         self.output_file.write(
             "time, msg#, src_id, dest_id, local_flag, position_enhanced, position_flt_error, yaw, pitch, roll, local_depth, VOS, RSSI, usbl_rssi[0], usbl_rssi[1], usbl_rssi[2], usbl_rssi[3], range, azimuth, elevation, easting, northing, depth\n")
         
-
     def modem_callback(self, response):
-        csv_line = (
+        csv_line = (""+
             time.time()                 +", "+
             self.i                      +", "+
             response.msg_id             +", "+
-            response.src_id             +", "+ #TODO: include source and dest ids in modem rec and add here
+            response.src_id             +", "+
             response.dest_id            +", "+
             response.local_flag         +", "+
             response.position_enhanced  +", "+
@@ -51,6 +49,7 @@ class SeatracLogger(Node):
         self.i += 1
 
         #TODO: add code to send out another message to the next beacon in the order
+
         
 
 def main(args=None):

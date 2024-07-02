@@ -1,25 +1,22 @@
 
+[TestMetadata] # these are configurations not used by the program, but may be usefull to know when post-processing the logged data
+test_name   = "MyTest"  # Test name should be the same for all beacons in the test
+this_beacon_depth  = nan
+other_beacon_depth = nan
+horizontal_dist    = nan
+
 [LoggerConfig] # these are configurations of the test done
 
-test_name   = "MyTest"  # Test name should be the same for all beacons in the test
-num_samples = 5
-
-
-other_beacon_ids = [5, 2, 4] # a list of beacon ids that you'll be pinging in the test
-
+num_pings_per_beacon = 5
+other_beacon_ids = [15] # a list of beacon ids that you'll be pinging in the test
 use_advanced_usbl = true
     # while normal usbl uses the bearing and range to calculate the position of the other beacon
     # advanced usbl also uses the depth of the other beacon to calculate position
     # this depth is sent in the acoustic message payload.
 
-[TestMetadata]
-this_beacon_depth  = nan
-other_beacon_depth = nan
-horizontal_dist    = nan
-
 [SeatracConfig] # These are configurations set to the seatrac driver
 
-beacon_id           = 15 # valid ids are 1-15
+beacon_id           = 2 # valid ids are 1-15
 env_salinity_ppt    = 0  # 0 ppt for fresh water and 35 ppt for salt water
 
 transceiver_range_timeout_meters         = 1000
