@@ -21,6 +21,8 @@ class SeatracLogger(Node):
 
         time_str = time.asctime()
 
+        self.i=1
+
         with open(CONFIG_FILE_PATH) as config_file:
             config = toml.load(config_file)
             test_name = config["LoggerConfig"]["test_name"]
@@ -62,7 +64,7 @@ class SeatracLogger(Node):
             str(response.position_depth)     +"\n"
         )
         self.output_file.write(csv_line)
-
+        self.i += 1
         
 
 def main(args=None):
