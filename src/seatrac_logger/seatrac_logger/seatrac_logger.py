@@ -1,6 +1,7 @@
 
 import os
 import time
+from datetime import datetime
 import toml
 import rclpy
 from rclpy.node import Node
@@ -19,7 +20,7 @@ class SeatracLogger(Node):
         if not os.path.exists("logger_configurations"):
             os.mkdir("logger_configurations")
 
-        time_str = time.asctime()
+        time_str = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
         self.i=1
 
@@ -27,11 +28,11 @@ class SeatracLogger(Node):
             config = toml.load(config_file)
             test_name = config["LoggerConfig"]["test_name"]
         
-        with open(f"logger_configurations/{time_str}-{test_name}.toml", 'w') as config_save:
+        with open(f"logger_configurations/{time_str}---{test_name}.toml", 'w') as config_save:
             with open(CONFIG_FILE_PATH) as config_file:
                 config_save.write(config_file.read())
 
-        self.output_file = open(f"logger_data/{time_str}-{test_name}.csv", 'w')
+        self.output_file = open(f"logger_data/{time_str}---{test_name}.csv", 'w')
         self.output_file.write(
             "time, msg#, src_id, dest_id, local_flag, position_enhanced, position_flt_error, yaw, pitch, roll, local_depth, VOS, RSSI, usbl_rssi[0], usbl_rssi[1], usbl_rssi[2], usbl_rssi[3], range, azimuth, elevation, easting, northing, depth\n")
         
