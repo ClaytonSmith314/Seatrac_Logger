@@ -1,8 +1,12 @@
 
+import os
 import time
+import toml
 import rclpy
 from rclpy.node import Node
 from seatrac_interfaces.msg import ModemRec
+
+CONFIG_FILE_PATH = "./seatrac_logger_config.toml"
 
 class SeatracLogger(Node):
 
@@ -10,9 +14,22 @@ class SeatracLogger(Node):
         super().__init__('logger')
         self.modem_subscriber_ = self.create_subscription(ModemRec, 'modem_rec', self.modem_callback, 10)
 
-        self.i = 0
+        if not os.path.exists("logger_data"):
+            os.mkdir("logger_data")
+        if not os.path.exists("logger_configurations"):
+            os.mkdir("logger_configurations")
 
-        self.output_file = open("logger_data/test_file.csv", 'w')
+        time_str = time.localtime()
+
+        with open(CONFIG_FILE_PATH) as config_file:
+            config = toml.load(config_file)
+            test_name = config["LoggerConfig"]["test_name"]
+        
+        with open(f"logger_configurations/{time_str}-{test_name}.toml", 'w') as config_save:
+            with open(CONFIG_FILE_PATH) as config_file:
+                config_save.write(config_file.read())
+
+        self.output_file = open(f"logger_data/{time_str}-{test_name}.csv", 'w')
         self.output_file.write(
             "time, msg#, src_id, dest_id, local_flag, position_enhanced, position_flt_error, yaw, pitch, roll, local_depth, VOS, RSSI, usbl_rssi[0], usbl_rssi[1], usbl_rssi[2], usbl_rssi[3], range, azimuth, elevation, easting, northing, depth\n")
         
@@ -45,10 +62,6 @@ class SeatracLogger(Node):
             str(response.position_depth)     +"\n"
         )
         self.output_file.write(csv_line)
-
-        self.i += 1
-
-        #TODO: add code to send out another message to the next beacon in the order
 
         
 

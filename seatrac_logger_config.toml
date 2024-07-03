@@ -1,12 +1,12 @@
 
-[TestMetadata] # these are configurations not used by the program, but may be usefull to know when post-processing the logged data
-test_name   = "MyTest"  # Test name should be the same for all beacons in the test
+[TestMetadata] # these are configurations not used by the program, but may be usefull to know when post-processing the logged d
 this_beacon_depth  = nan
 other_beacon_depth = nan
 horizontal_dist    = nan
 
 [LoggerConfig] # these are configurations of the test done
 
+test_name   = "MyTest"  # Test name should be the same for all beacons in the test
 num_pings_per_beacon = 5
 other_beacon_ids = [15] # a list of beacon ids that you'll be pinging in the test
 use_advanced_usbl = true
