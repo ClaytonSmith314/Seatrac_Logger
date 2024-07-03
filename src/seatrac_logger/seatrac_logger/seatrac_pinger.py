@@ -7,6 +7,7 @@ import toml
 from .seatrac_utils import CID_E, AMSGTYPE_E
 
 CONFIG_FILE_PATH = "./seatrac_logger_config.toml"
+TIMER_PERIOD_SECONDS = 0.02
 
 class SeatracPinger(Node):
 
@@ -19,6 +20,7 @@ class SeatracPinger(Node):
             self.num_rounds_of_pings = logger_config["num_pings_per_beacon"]
             self.other_beacon_ids    = logger_config["other_beacon_ids"]
             self.use_advanced_usbl   = logger_config["use_advanced_usbl"]
+            self.timeout             = logger_config["wait_for_response_timeout_seconds"]
 
         for beacon_id in self.other_beacon_ids:
             assert beacon_id>=1 and beacon_id<=15
@@ -30,6 +32,10 @@ class SeatracPinger(Node):
 
         self.modem_publisher_  = self.create_publisher(ModemSend, 'modem_send', 10)
         self.modem_subscriber_ = self.create_subscription(ModemRec, 'modem_rec', self.modem_callback, 10)
+
+        self.timer = self.create_timer(TIMER_PERIOD_SECONDS, self.timer_callback)
+        self.time_since_pinged = 0.0
+        self.received_response = False
 
         self.beacon_id_list_index = 0
         self.rounds_of_pings_sent = 0
@@ -46,10 +52,6 @@ class SeatracPinger(Node):
 
         self.modem_publisher_.publish(request)
 
-    def modem_callback(self, response):
-
-        self.send_ping()
-
         self.beacon_id_list_index += 1
         if self.beacon_id_list_index >= len(self.other_beacon_ids):
             self.beacon_id_list_index = 0
@@ -57,6 +59,16 @@ class SeatracPinger(Node):
             if self.rounds_of_pings_sent > self.num_rounds_of_pings:
                 pass # TODO: kill the node here
 
+    def modem_callback(self, response):
+        self.received_response = True
+    
+    def timer_callback(self):
+        if self.received_response or self.time_since_pinged>self.timeout:
+            self.time_since_pinged = 0.0
+            self.received_response = False
+            self.send_ping()
+        else:
+            self.time_since_pinged += TIMER_PERIOD_SECONDS
 
 
 def main(args=None):
