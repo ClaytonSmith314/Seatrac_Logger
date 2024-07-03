@@ -19,7 +19,7 @@ class SeatracLogger(Node):
         if not os.path.exists("logger_configurations"):
             os.mkdir("logger_configurations")
 
-        time_str = time.localtime()
+        time_str = time.asctime()
 
         with open(CONFIG_FILE_PATH) as config_file:
             config = toml.load(config_file)
