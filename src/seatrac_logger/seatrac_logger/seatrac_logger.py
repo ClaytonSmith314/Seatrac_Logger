@@ -9,6 +9,10 @@ from seatrac_interfaces.msg import ModemRec
 
 CONFIG_FILE_PATH = "./seatrac_logger_config.toml"
 
+
+def byte_list_to_int(bl):
+    return (bl[0] << 24) | (bl[1] << 16) | (bl[2] << 8) | bl[3]
+
 class SeatracLogger(Node):
 
     def __init__(self):
@@ -22,7 +26,7 @@ class SeatracLogger(Node):
 
         time_str = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
 
-        self.i=1
+        #self.i=1
 
         with open(CONFIG_FILE_PATH) as config_file:
             config = toml.load(config_file)
@@ -38,34 +42,34 @@ class SeatracLogger(Node):
         
     def modem_callback(self, response):
         csv_line = (
-            str(time.time())                 +", "+
-            str(self.i)                      +", "+
-            str(response.msg_id)             +", "+
-            str(response.src_id)             +", "+
-            str(response.dest_id)            +", "+
-            str(response.local_flag)         +", "+
-            str(response.position_enhanced)  +", "+
-            str(response.position_flt_error) +", "+
-            str(response.attitude_yaw)       +", "+
-            str(response.attitude_pitch)     +", "+
-            str(response.attitude_roll)      +", "+
-            str(response.depth_local)        +", "+
-            str(response.vos)                +", "+
-            str(response.rssi)               +", "+
-            str(response.usbl_rssi[0])       +", "+
-            str(response.usbl_rssi[1])       +", "+
-            str(response.usbl_rssi[2])       +", "+
-            str(response.usbl_rssi[3])       +", "+
-            str(response.range_dist)         +", "+
-            str(response.usbl_azimuth)       +", "+
-            str(response.usbl_elevation)     +", "+
-            str(response.usbl_fit_error)     +", "+
-            str(response.position_easting)   +", "+
-            str(response.position_northing)  +", "+
-            str(response.position_depth)     +"\n"
+            str(time.time())                            +", "+
+            str(byte_list_to_int(response.packet_data)) +", "+
+            str(response.msg_id)                        +", "+
+            str(response.src_id)                        +", "+
+            str(response.dest_id)                       +", "+
+            str(response.local_flag)                    +", "+
+            str(response.position_enhanced)             +", "+
+            str(response.position_flt_error)            +", "+
+            str(response.attitude_yaw)                  +", "+
+            str(response.attitude_pitch)                +", "+
+            str(response.attitude_roll)                 +", "+
+            str(response.depth_local)                   +", "+
+            str(response.vos)                           +", "+
+            str(response.rssi)                          +", "+
+            str(response.usbl_rssi[0])                  +", "+
+            str(response.usbl_rssi[1])                  +", "+
+            str(response.usbl_rssi[2])                  +", "+
+            str(response.usbl_rssi[3])                  +", "+
+            str(response.range_dist)                    +", "+
+            str(response.usbl_azimuth)                  +", "+
+            str(response.usbl_elevation)                +", "+
+            str(response.usbl_fit_error)                +", "+
+            str(response.position_easting)              +", "+
+            str(response.position_northing)             +", "+
+            str(response.position_depth)                +"\n"
         )
         self.output_file.write(csv_line)
-        self.i += 1
+        #self.i += 1
         
 
 def main(args=None):

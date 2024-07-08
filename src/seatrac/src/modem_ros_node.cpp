@@ -70,6 +70,27 @@ public:
         RCLCPP_ERROR(this->get_logger(), err.str().c_str());
       } break;
 
+      case CID_ECHO_RESP: {
+        messages::EchoResp response;     //struct that contains response fields
+        response = data;                    //operator overload fills in response struct with correct data
+
+        auto msg = seatrac_interfaces::msg::ModemRec();
+        msg.msg_id = CID_ECHO_RESP;
+        msg.packet_len = response.packetLen;
+        std::memcpy(&msg.packet_data, response.packetData, response.packetLen);
+        cpyFixtoRosmsg(msg, response.acoFix);
+
+        RCLCPP_INFO(this->get_logger(), "Publishing ModemRec CID_ECHO_RECEIVE");
+        publisher_->publish(msg);
+      } break;
+      case CID_ECHO_ERROR: {
+        messages::EchoError response;
+        response = data;
+        std::ostringstream err;
+        err << "Error with seatrac modem data message." << std::endl << response;
+        RCLCPP_ERROR(this->get_logger(), err.str().c_str());
+      } break;
+
       case CID_PING_RESP: {
         messages::PingResp response;
         response = data;
@@ -114,6 +135,19 @@ private:
       } break;
       case CID_DAT_SEND: {
         messages::DataSend::Request req; //struct contains message to send to modem
+
+        req.destId    = static_cast<BID_E>(rosmsg->dest_id);
+        req.msgType   = static_cast<AMSGTYPE_E>(rosmsg->msg_type);
+        req.packetLen = std::min(rosmsg->packet_len, (uint8_t)sizeof(req.packetData));
+
+        std::memcpy(req.packetData, rosmsg->packet_data.data(), req.packetLen);
+        RCLCPP_INFO(this->get_logger(), "Seatrac modem broadcasting CID_DAT_SEND message. String is '%s'", req.packetData);
+        this->send(sizeof(req), (const uint8_t*)&req);
+
+      } break;
+
+      case CID_ECHO_SEND: {
+        messages::EchoSend::Request req; //struct contains message to send to modem
 
         req.destId    = static_cast<BID_E>(rosmsg->dest_id);
         req.msgType   = static_cast<AMSGTYPE_E>(rosmsg->msg_type);
