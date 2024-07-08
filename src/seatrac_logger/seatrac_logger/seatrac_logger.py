@@ -31,7 +31,7 @@ class SeatracLogger(Node):
         with open(CONFIG_FILE_PATH) as config_file:
             config = toml.load(config_file)
             test_name = config["LoggerConfig"]["test_name"]
-        
+
         with open(f"logger_configurations/{time_str}---{test_name}.toml", 'w') as config_save:
             with open(CONFIG_FILE_PATH) as config_file:
                 config_save.write(config_file.read())
@@ -39,7 +39,7 @@ class SeatracLogger(Node):
         self.output_file = open(f"logger_data/{time_str}---{test_name}.csv", 'w')
         self.output_file.write(
             "time, msg#, src_id, dest_id, local_flag, position_enhanced, position_flt_error, yaw, pitch, roll, local_depth, VOS, RSSI, usbl_rssi[0], usbl_rssi[1], usbl_rssi[2], usbl_rssi[3], range, azimuth, elevation, easting, northing, depth\n")
-        
+
     def modem_callback(self, response):
         csv_line = (
             str(time.time())                            +", "+
@@ -70,7 +70,7 @@ class SeatracLogger(Node):
         )
         self.output_file.write(csv_line)
         #self.i += 1
-        
+
 
 def main(args=None):
     rclpy.init(args=args)

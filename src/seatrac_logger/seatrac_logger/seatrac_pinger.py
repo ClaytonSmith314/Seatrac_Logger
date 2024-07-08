@@ -7,7 +7,7 @@ import toml
 from .seatrac_utils import CID_E, AMSGTYPE_E
 
 CONFIG_FILE_PATH = "./seatrac_logger_config.toml"
-TIMER_PERIOD_SECONDS = 0.02
+TIMER_PERIOD_SECONDS = 0.01
 
 
 def int_to_bytes_list(num):
@@ -16,7 +16,7 @@ def int_to_bytes_list(num):
     byte2 = (num >> 16) & 0xFF
     byte3 = (num >> 8) & 0xFF
     byte4 = num & 0xFF
-    
+
     # Return the list of bytes
     return [byte1, byte2, byte3, byte4]
 
@@ -24,7 +24,7 @@ class SeatracPinger(Node):
 
     def __init__(self):
         super().__init__('pinger')
-        
+
         with open(CONFIG_FILE_PATH) as config_file:
             logger_config = toml.load(config_file)["LoggerConfig"]
 
