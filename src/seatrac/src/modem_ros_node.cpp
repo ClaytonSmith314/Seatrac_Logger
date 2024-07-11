@@ -154,7 +154,7 @@ private:
         req.packetLen = std::min(rosmsg->packet_len, (uint8_t)sizeof(req.packetData));
 
         std::memcpy(req.packetData, rosmsg->packet_data.data(), req.packetLen);
-        RCLCPP_INFO(this->get_logger(), "Seatrac modem broadcasting CID_DAT_SEND message. String is '%s'", req.packetData);
+        RCLCPP_INFO(this->get_logger(), "Seatrac modem broadcasting CID_ECHO_SEND message. String is '%s'", req.packetData);
         this->send(sizeof(req), (const uint8_t*)&req);
 
       } break;
@@ -163,7 +163,7 @@ private:
         messages::PingSend::Request req;
         req.target    = static_cast<BID_E>(rosmsg->dest_id);
         req.pingType  = static_cast<AMSGTYPE_E>(rosmsg->msg_type);
-        RCLCPP_INFO(this->get_logger(), "Seatrac modem broadcasting CID_DAT_SEND message");
+        RCLCPP_INFO(this->get_logger(), "Seatrac modem broadcasting CID_PING_SEND message");
         this->send(sizeof(req), (const uint8_t*)&req);
       } break;
       //TODO: add case for calibration
