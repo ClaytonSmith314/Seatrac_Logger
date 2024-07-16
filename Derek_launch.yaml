@@ -7,6 +7,6 @@ launch:
     name: "modem"
 
 - node:
-    pkg:  "Derek_field_test"
+    pkg:  "derek_field_test"
     exec: "seatrac_pinger"
     name: "seatrac_pinger"
