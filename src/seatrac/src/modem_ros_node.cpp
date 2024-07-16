@@ -85,7 +85,7 @@ public:
         msg.packet_len = report.packetLen;
         std::memcpy(&msg.packet_data, report.packetData, report.packetLen);
         cpyFixtoRosmsg(msg, report.acoFix);
-      }
+      } break;
       case CID_ECHO_ERROR: {
         messages::EchoError report;
         report = data;
@@ -112,18 +112,18 @@ public:
         msg.packet_len = 0;
         msg.local_flag = true;
         cpyFixtoRosmsg(msg, report.acoFix);
-      }
+      } break;
       case CID_PING_ERROR: {
         messages::PingError report;
         report = data;
         msg.includes_command_status_code = true;
-        msg.command_status_code = report.status;
+        msg.command_status_code = report.statusCode;
       } break;
       case CID_PING_SEND: {
         messages::PingSend report;
         report = data;
         msg.includes_command_status_code = true;
-        msg.command_status_code = report.status;
+        msg.command_status_code = report.statusCode;
       } break;
 
       case CID_NAV_QUERY_RESP: {
@@ -144,7 +144,7 @@ public:
           msg.remote_roll  = report.remoteRoll;
         }
         if(report.queryFlags & QRY_DATA) {
-          msg.packet_len = remote.packetLen;
+          msg.packet_len = report.packetLen;
           std::memcpy(&msg.packet_data, report.packetData, report.packetLen);
         } else msg.packet_len = 0;
       } break;
@@ -161,10 +161,10 @@ public:
         messages::NavError report;
         report = data;
         msg.includes_command_status_code = true;
-        msg.command_status_code = report.status;
+        msg.command_status_code = report.statusCode;
       } break;
-      case CID_NAV_SEND: {
-        messages::NavSend report;
+      case CID_NAV_QUERY_SEND: {
+        messages::NavQuerySend report;
         report = data;
         msg.includes_command_status_code = true;
         msg.command_status_code = report.status;
@@ -256,9 +256,9 @@ private:
 
       case CID_NAV_QUERY_SEND: {
         messages::NavQuerySend::Request req;
-        req.target     = static_cast<BID_E>(rosmsg->dest_id);
-        req.queryFlags = static_cast<NAV_QUERY_E>(rosmsg->nav_query_flags)
-        req.packetLen  = rosmsg->packet_len
+        req.destId     = static_cast<BID_E>(rosmsg->dest_id);
+        req.queryFlags = static_cast<NAV_QUERY_E>(rosmsg->nav_query_flags);
+        req.packetLen  = rosmsg->packet_len;
         std::memcpy(req.packetData, rosmsg->packet_data.data(), req.packetLen);
         this->send(sizeof(req), (const uint8_t*)&req);
       }
