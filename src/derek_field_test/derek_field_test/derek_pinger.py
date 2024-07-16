@@ -16,7 +16,7 @@ class SeatracPinger(Node):
         super().__init__('pinger')
 
         with open(CONFIG_FILE_PATH) as config_file:
-            logger_config = toml.load(config_file)["DerekTest"]
+            logger_config = toml.load(config_file)["DerekTestConfig"]
 
             self.num_rounds_of_pings = logger_config["num_pings_per_beacon"]
             self.other_beacon_ids    = logger_config["other_beacon_ids"]
