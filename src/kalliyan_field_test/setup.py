@@ -19,8 +19,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'kalliyan_logger = src.kalliyan_logger:main',
-            'kalliyan_pinger = src.kalliyan_pinger:main'
+            'kalliyan_logger = kalliyan_field_test.kalliyan_logger:main',
+            'kalliyan_pinger = kalliyan_field_test.kalliyan_pinger:main'
         ],
     },
 )

@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'derek_logger = src.derek_logger:main',
-            'derek_pinger = src.derek_pinger:main'
+            'derek_logger = derek_field_test.derek_logger:main',
+            'derek_pinger = derek_field_test.derek_pinger:main'
         ],
     },
 )
