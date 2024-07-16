@@ -20,8 +20,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'seatrac_logger = src.seatrac_logger:main',
-            'seatrac_pinger = src.seatrac_pinger:main'
+            'derek_logger = src.derek_logger:main',
+            'derek_pinger = src.derek_pinger:main'
         ],
     },
 )
