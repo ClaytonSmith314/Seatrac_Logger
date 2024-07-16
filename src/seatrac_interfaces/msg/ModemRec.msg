@@ -7,7 +7,7 @@ uint8 msg_id            # CIDE - Command Identification Code. Indicates the type
                         # Different msg types include different information, and therefore populate different fields.
                         # Not all CID_E msg types are captured or supported in this ros message.
 
-uint8 beacon_id         # BID_E. The id of the local beacon that generated this report
+#uint8 beacon_id         # BID_E. The id of the local beacon that generated this report
 bool  from_acoustic_tx  # True if this report was generated from an acoustic transmission successfully received from a remote beacon
                         # False if this report is a Status message or response to a command from the client program
 
