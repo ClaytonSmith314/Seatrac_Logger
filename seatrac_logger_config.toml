@@ -1,23 +1,29 @@
 
-[TestMetadata] # these are configurations not used by the program, but may be usefull to know when post-processing the logged d
-this_beacon_depth  = nan
-other_beacon_depth = nan
-horizontal_dist    = nan
 
-[LoggerConfig] # these are configurations of the test done
+[DerekTestConfig] # these are configurations of the test done
 
-test_name                         = "MyTest"  # Test name should be the same for all beacons in the test
-num_pings_per_beacon              = 5
+test_name                         = "DerekTest"  # Test name should be the same for all beacons in the test
+#num_pings_per_beacon              = 5
 other_beacon_ids                  = [15] # a list of beacon ids that you'll be pinging in the test
 wait_for_response_timeout_seconds = 10
 use_advanced_usbl                 = true
     # while normal usbl uses the bearing and range to calculate the position of the other beacon
     # advanced usbl also uses the depth of the other beacon to calculate position
-    # this depth is sent in the acoustic message payload.
+
+
+
+[KalliyanTestConfig] # these are configurations of the test done
+
+test_name                         = "KalliyanTest"  # Test name should be the same for all beacons in the test
+#num_pings_per_beacon              = 5
+other_beacon_ids                  = [15] # a list of beacon ids that you'll be pinging in the test
+wait_for_response_timeout_seconds = 10
+use_advanced_usbl                 = true
+
 
 [SeatracConfig] # These are configurations set to the seatrac driver
 
-beacon_id           = 2 # valid ids are 1-15
+beacon_id           = 1 # valid ids are 1-15
 env_salinity_ppt    = 0  # 0 ppt for fresh water and 35 ppt for salt water
 
 transceiver_range_timeout_meters         = 1000 
@@ -46,9 +52,9 @@ serial_port = "/dev/ttyUSB0"
 # transceiver_block_send_all      = false
 
 # # valid frequencies are 0, 1, 2.5, 5, 10 or 25 Hz. 0 turns off automatic status reports 
-status_report_fequency_hertz           = 10
-status_include_temp_pressure_depth_vos = true
-status_include_yaw_pitch_roll          = true
+# status_report_fequency_hertz           = 10
+# status_include_temp_pressure_depth_vos = true
+# status_include_yaw_pitch_roll          = true
 # status_include_accel_mag_gyro          = false
 # status_include_accel_cal_data               = false
 # status_include_mag_cal_data                 = false

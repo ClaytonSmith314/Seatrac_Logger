@@ -1,0 +1,12 @@
+
+launch:
+
+- node:
+    pkg:  "seatrac"
+    exec: "modem"
+    name: "modem"
+
+- node:
+    pkg:  "Kalliyan_field_test"
+    exec: "seatrac_pinger"
+    name: "seatrac_pinger"
