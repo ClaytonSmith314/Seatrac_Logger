@@ -6,10 +6,10 @@ launch:
     exec: "modem"
     name: "modem"
 
-- node:
-    pkg:  "seatrac_logger"
-    exec: "seatrac_logger"
-    name: "seatrac_logger"
+#- node:
+#    pkg:  "seatrac_logger"
+#    exec: "seatrac_logger"
+#    name: "seatrac_logger"
 
 - node:
     pkg:  "seatrac_logger"

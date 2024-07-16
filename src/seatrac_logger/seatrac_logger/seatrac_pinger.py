@@ -11,14 +11,12 @@ TIMER_PERIOD_SECONDS = 0.01
 
 
 def int_to_bytes_list(num):
-    # Extract bytes using bitwise operations
-    byte1 = (num >> 24) & 0xFF
-    byte2 = (num >> 16) & 0xFF
-    byte3 = (num >> 8) & 0xFF
-    byte4 = num & 0xFF
-
-    # Return the list of bytes
-    return [byte1, byte2, byte3, byte4]
+    bytes = [0]*30
+    bytes[0] = (num >> 24) & 0xFF
+    bytes[1] = (num >> 16) & 0xFF
+    bytes[2] = (num >> 8) & 0xFF
+    bytes[3] = num & 0xFF
+    return bytes
 
 class SeatracPinger(Node):
 

@@ -46,9 +46,9 @@ serial_port = "/dev/ttyUSB0"
 # transceiver_block_send_all      = false
 
 # # valid frequencies are 0, 1, 2.5, 5, 10 or 25 Hz. 0 turns off automatic status reports 
-# status_report_fequency_hertz           = 10
-# status_include_temp_pressure_depth_vos = false
-# status_include_yaw_pitch_roll          = false
+status_report_fequency_hertz           = 10
+status_include_temp_pressure_depth_vos = true
+status_include_yaw_pitch_roll          = true
 # status_include_accel_mag_gyro          = false
 # status_include_accel_cal_data               = false
 # status_include_mag_cal_data                 = false
