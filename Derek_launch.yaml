@@ -8,5 +8,5 @@ launch:
 
 - node:
     pkg:  "derek_field_test"
-    exec: "seatrac_pinger"
-    name: "seatrac_pinger"
+    exec: "derek_pinger"
+    name: "derek_pinger"
