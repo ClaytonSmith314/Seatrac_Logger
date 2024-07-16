@@ -7,6 +7,6 @@ launch:
     name: "modem"
 
 - node:
-    pkg:  "Kalliyan_field_test"
-    exec: "seatrac_pinger"
-    name: "seatrac_pinger"
+    pkg:  "kalliyan_field_test"
+    exec: "kalliyan_pinger"
+    name: "kalliyan_pinger"
