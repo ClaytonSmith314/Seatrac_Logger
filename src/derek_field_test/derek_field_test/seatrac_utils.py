@@ -71,18 +71,29 @@ class CID_E :
                            # occurs.
 
     # DAT Protocol Messages
-    CID_DAT_SEND = 0x60         # Message sent to transmit a datagram to
+    CID_DAT_SEND = 0x60          # Message sent to transmit a datagram to
                                  # another beacon
-    CID_DAT_RECEIVE = 0x61      # Message generated when a beacon receives a
+    CID_DAT_RECEIVE = 0x61       # Message generated when a beacon receives a
                                  # datagram.
-    CID_DAT_ERROR = 0x63        # Message generated when a beacon response
+    CID_DAT_ERROR = 0x63         # Message generated when a beacon response
                                  # error/timeout occurs for ACKs.
-    CID_DAT_QUEUE_SET = 0x64    # Message sent to set the contents of the
+    CID_DAT_QUEUE_SET = 0x64     # Message sent to set the contents of the
                                  # packet data queue.
-    CID_DAT_QUEUE_CLR = 0x65    # Message sent to clear the contents of the
+    CID_DAT_QUEUE_CLR = 0x65     # Message sent to clear the contents of the
                                  # packet data queue.
-    CID_DAT_QUEUE_STATUS = 0x66 # Message sent to obtain the current status
+    CID_DAT_QUEUE_STATUS = 0x66  # Message sent to obtain the current status
                                  # of the packet data queue.
+
+    # NAV Protocol Messages
+    CID_NAV_QUERY_SEND = 0x50      # Message sent to query navigation
+                                   # information from a remote beacon.
+    CID_NAV_QUERY_REQ = 0x51       # Message sent from a beacon that receives
+                                   # a NAV_QUERY.
+    CID_NAV_QUERY_RESP = 0x52      # Message generated when the beacon
+                                   # received a response to a NAV_QUERY.
+    CID_NAV_ERROR = 0x53           # Message generated if there is a problem
+                                   # with a NAV_QUERY - i.e. timeout etc.
+
 
 
 
@@ -141,6 +152,28 @@ class AMSGTYPE_E :
                        # certain structures need to specify "No Message Type"
                        # (for example see ACOFIX_T) and this value is used as
                        # an OUTPUT ONLY to indicate this.
+
+class NAV_QUERY_E:
+    QRY_DEPTH = 0x01     # When set, a NAV_QUERY_SEND command will request
+                         # that depth information is sent back, and a
+                         # NAV_QUERY_RESP will contain depth data fields.
+    QRY_SUPPLY = 0x02    # When set, a NAV_QUERY_SEND command will request
+                         # that supply voltage information is sent back, and a
+                         # NAV_QUERY_RESP will contain supply voltage data
+                         # fields.
+    QRY_TEMP = 0x04      # When set, a NAV_QUERY_SEND command will request
+                         # that temperature information is sent back, and a
+                         # NAV_QUERY_RESP will contain temperature data
+                         # fields.
+    QRY_ATTITUDE = 0x08  # When set, a NAV_QUERY_SEND command will request
+                         # that attitude information is sent back, and a
+                         # NAV_QUERY_RESP will contain attitude data fields.
+    QRY_DATA = 0x80      # When set, a NAV_QUERY_SEND command will request
+                         # that any queued pending NAV data should be sent
+                         # back, and a NAV_QUERY_RESP will contain data
+                         # payload fields.
+
+
 
 
 def hello_world_modem_send():
