@@ -60,7 +60,7 @@ class SeatracPinger(Node):
             self.send_ping()
         if response.msg_id == CID_E.CID_PING_ERROR:
             self.send_ping()
-            self.get_logger().error("Seatrac Ping Error. CST_E Error Code: %s", str(response.command_status_code))
+            self.get_logger().error(f"Seatrac Ping Error. CST_E Error Code: {str(response.command_status_code)}")
 
 
 def main(args=None):
