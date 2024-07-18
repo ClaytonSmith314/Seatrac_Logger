@@ -4,3 +4,4 @@ log
 .vscode
 logger_configurations
 logger_data
+**/__pycache__

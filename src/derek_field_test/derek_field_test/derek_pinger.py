@@ -4,7 +4,7 @@ import rclpy
 from rclpy.node import Node
 from seatrac_interfaces.msg import ModemSend, ModemRec
 import toml
-from .seatrac_utils import CID_E, AMSGTYPE_E
+from .seatrac_utils import CID_E, AMSGTYPE_E, CST_E
 
 CONFIG_FILE_PATH = "./seatrac_logger_config.toml"
 TIMER_PERIOD_SECONDS = 0.01
@@ -60,7 +60,7 @@ class SeatracPinger(Node):
             self.send_ping()
         if response.msg_id == CID_E.CID_PING_ERROR:
             self.send_ping()
-            self.get_logger().error(f"Seatrac Ping Error. CST_E Error Code: {str(response.command_status_code)}")
+            self.get_logger().error(f"Seatrac Ping Error. Target Beacon Id: {response.target_id}. Error Code: {CST_E.to_str(response.command_status_code)}")
 
 
 def main(args=None):

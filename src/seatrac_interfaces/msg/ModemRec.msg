@@ -7,7 +7,6 @@ uint8 msg_id            # CIDE - Command Identification Code. Indicates the type
                         # Different msg types include different information, and therefore populate different fields.
                         # Not all CID_E msg types are captured or supported in this ros message.
 
-#uint8 beacon_id         # BID_E. The id of the local beacon that generated this report
 bool  from_acoustic_tx  # True if this report was generated from an acoustic transmission successfully received from a remote beacon
                         # False if this report is a Status message or response to a command from the client program
 
@@ -17,6 +16,7 @@ bool  from_acoustic_tx  # True if this report was generated from an acoustic tra
         # Reports that include a command status code usually do not include any other fields besides msg_id and local_beacon_id
 bool  includes_command_status_code
 uint8 command_status_code
+uint8 target_id   # BID_E. For error reports from acoustic transmissions, the target_id is the id of the remote beacon.
 
 
 ### Acoustic Fix OR Status Fields ###
@@ -49,7 +49,8 @@ bool  local_flag          # True if the transmission was addressed to this beaco
 bool  position_enhanced   # True if depth was sent in the acoustic transmission. False if depth was not transmitted.
 bool  position_flt_error  # True if the position filter detected a discrepancy between this position and the last position.
 
-uint8 dest_id  # BID_E. The id of the beacon the acoustic transmission was addressed to. Usually the same as beacon_id.
+uint8 dest_id  # BID_E. The id of the beacon the acoustic transmission was addressed to. 
+               #        Usually the same as the beacon that genrated this report.
 uint8 src_id   # BID_E. The id of the remote beacon that sent the acoustic transmission.
 
 uint16 rssi  # rssi for main transceiver. Divide by 10 for rssi in decibels.

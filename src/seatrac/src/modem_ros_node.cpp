@@ -63,12 +63,14 @@ public:
         report = data;
         msg.includes_command_status_code = true;
         msg.command_status_code = report.status;
+        msg.target_id = report.beaconId;
       } break;
       case CID_DAT_SEND: {
         messages::DataSend report;
         report = data;
         msg.includes_command_status_code = true;
         msg.command_status_code = report.status;
+        msg.target_id = report.beaconId;
       } break;
 
       case CID_ECHO_RESP: {
@@ -91,12 +93,14 @@ public:
         report = data;
         msg.includes_command_status_code = true;
         msg.command_status_code = report.status;
+        msg.target_id = report.beaconId;
       } break;
       case CID_ECHO_SEND: {
         messages::EchoSend report;
         report = data;
         msg.includes_command_status_code = true;
         msg.command_status_code = report.status;
+        msg.target_id = report.beaconId;
       } break;
 
       case CID_PING_RESP: {
@@ -118,12 +122,14 @@ public:
         report = data;
         msg.includes_command_status_code = true;
         msg.command_status_code = report.statusCode;
+        msg.target_id = report.beaconId;
       } break;
       case CID_PING_SEND: {
         messages::PingSend report;
         report = data;
         msg.includes_command_status_code = true;
         msg.command_status_code = report.statusCode;
+        msg.target_id = report.target;
       } break;
 
       case CID_NAV_QUERY_RESP: {
@@ -162,12 +168,14 @@ public:
         report = data;
         msg.includes_command_status_code = true;
         msg.command_status_code = report.statusCode;
+        msg.target_id = report.beaconId;
       } break;
       case CID_NAV_QUERY_SEND: {
         messages::NavQuerySend report;
         report = data;
         msg.includes_command_status_code = true;
         msg.command_status_code = report.status;
+        msg.target_id = report.beaconId;
       } break;
 
       case CID_XCVR_RX_ERR: {
