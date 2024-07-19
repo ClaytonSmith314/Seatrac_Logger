@@ -29,8 +29,15 @@ target_link_libraries(modem
 seatrac_driver
 )
 
+add_executable(setup_beacon src/seatrac_beacon_setup_tool.cpp)
+#ament_target_dependencies(modem rclcpp std_msgs seatrac_interfaces)
+target_link_libraries(setup_beacon
+seatrac_driver
+)
+
 install(TARGETS
   modem
+  setup_beacon
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
