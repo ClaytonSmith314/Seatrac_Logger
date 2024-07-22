@@ -10,3 +10,10 @@ launch:
     pkg:  "kalliyan_field_test"
     exec: "kalliyan_pinger"
     name: "kalliyan_pinger"
+    param:
+    -
+        name: "beacon_ids_to_ping"
+        value: 
+          - 4
+          - 10
+          - 15
