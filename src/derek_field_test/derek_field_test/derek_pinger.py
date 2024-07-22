@@ -41,8 +41,7 @@ class SeatracPinger(Node):
         self.beacon_id_list_index = 0
         self.rounds_of_pings_sent = 0
 
-        time.sleep(1)
-        self.send_ping()
+        self.first_response = True
 
 
     def send_ping(self):
@@ -60,6 +59,10 @@ class SeatracPinger(Node):
 
 
     def modem_callback(self, response):
+        if self.first_response:
+            self.get_logger().info("got first response")
+            self.first_response = False
+            self.send_ping()
         if response.msg_id == CID_E.CID_PING_RESP:
             self.send_ping()
         if response.msg_id == CID_E.CID_PING_ERROR:

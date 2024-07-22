@@ -34,9 +34,7 @@ class SeatracPinger(Node):
         self.beacon_id_list_index = 0
         self.rounds_of_pings_sent = 0
 
-        time.sleep(1)
-        self.send_ping()
-
+        self.first_response = True
 
     def send_ping(self):
         request = ModemSend()
@@ -52,12 +50,15 @@ class SeatracPinger(Node):
             self.rounds_of_pings_sent += 1
 
     def modem_callback(self, response):
-        if response.msg_id == CID_E.CID_NAV_QUERY_RESP:
+        if self.first_response:
+            self.get_logger().info("got first response")
+            self.first_response = False
             self.send_ping()
-        if response.msg_id == CID_E.CID_NAV_ERROR:
+        if response.msg_id == CID_E.CID_PING_RESP:
             self.send_ping()
-            self.get_logger().error(f"Seatrac Nav Error. Target Beacon Id: {response.target_id}. CST_E Error Code: {CST_E.to_str(response.command_status_code)}")
-
+        if response.msg_id == CID_E.CID_PING_ERROR:
+            self.send_ping()
+            self.get_logger().error(f"Seatrac Ping Error. Target Beacon Id: {response.target_id}. Error Code: {CST_E.to_str(response.command_status_code)}")
 
 def main(args=None):
     rclpy.init(args=args)
