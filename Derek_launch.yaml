@@ -10,3 +10,9 @@ launch:
     pkg:  "derek_field_test"
     exec: "derek_pinger"
     name: "derek_pinger"
+    param:
+    -
+        name: "beacon_ids_to_ping"
+        value: 
+          - 15
+          - 4
