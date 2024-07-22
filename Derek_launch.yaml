@@ -14,5 +14,7 @@ launch:
     -
         name: "beacon_ids_to_ping"
         value: 
-          - 15
           - 4
+          - 10
+          - 15
+
