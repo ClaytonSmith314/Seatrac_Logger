@@ -104,7 +104,40 @@ class CID_E(SeatracEnum):
     CID_NAV_ERROR = 0x53           # Message generated if there is a problem
                                    # with a NAV_QUERY - i.e. timeout etc.
 
+    # Status Messages
+    CID_STATUS = 0x10          # Command sent to request the current system
+                               # status (AHRS, Depth, Temp, etc).
+    CID_STATUS_CFG_GET = 0x11  # Command sent to retrieve the configuration of
+                               # the status system (message content and
+                               # auto-output interval).
+    CID_STATUS_CFG_SET = 0x12  # Command sent to set the configuration of the
+                               # status system (message content and
+                               # auto-output interval).
 
+    # Acoustic Transceiver Messages
+    CID_XCVR_ANALYSE = 0x30       # Command sent to instruct the receiver to
+                                  # perform a noise analysis and report the
+                                  # results.
+    CID_XCVR_TX_MSG = 0x31        # Message sent when the transceiver
+                                  # transmits a message.
+    CID_XCVR_RX_ERR = 0x32        # Message sent when the transceiver receiver
+                                  # encounters an error.
+    CID_XCVR_RX_MSG = 0x33        # Message sent when the transceiver receives
+                                  # a message (not requiring a response).
+    CID_XCVR_RX_REQ = 0x34        # Message sent when the transceiver receives
+                                  # a request (requiring a response).
+    CID_XCVR_RX_RESP = 0x35       # Message sent when the transceiver receives
+                                  # a response (to a transmitted request).
+    CID_XCVR_RX_UNHANDLED = 0x37  # Message sent when a message has been
+                                  # received but not handled by the protocol
+                                  # stack.
+    CID_XCVR_USBL = 0x38          # Message sent when a USBL signal is decoded
+                                  # into an angular bearing.
+    CID_XCVR_FIX = 0x39           # Message sent when the transceiver gets a
+                                  # position/range fix on a beacon from a
+                                  # request/response.
+    CID_XCVR_STATUS = 0x3A        # Message sent to query the current
+                                  # transceiver state.
 
 
  # AMSGTYPE_E : Acoustic Message Type.
