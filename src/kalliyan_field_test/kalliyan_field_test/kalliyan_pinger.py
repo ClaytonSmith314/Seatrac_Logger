@@ -34,6 +34,7 @@ class SeatracPinger(Node):
         self.beacon_id_list_index = 0
         self.rounds_of_pings_sent = 0
 
+        time.sleep(1)
         self.send_ping()
 
 
