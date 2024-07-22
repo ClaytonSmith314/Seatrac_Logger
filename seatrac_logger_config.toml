@@ -2,10 +2,10 @@
 
 [DerekTestConfig] # these are configurations of the test done
 
-test_name                         = "DerekTest"  # Test name should be the same for all beacons in the test
-num_pings_per_beacon              = 5
+test_name                         = "DerekTest"
+#num_pings_per_beacon              = 5
 other_beacon_ids                  = [15] # a list of beacon ids that you'll be pinging in the test
-wait_for_response_timeout_seconds = 10
+#wait_for_response_timeout_seconds = 10
 use_advanced_usbl                 = true
     # while normal usbl uses the bearing and range to calculate the position of the other beacon
     # advanced usbl also uses the depth of the other beacon to calculate position
@@ -15,10 +15,10 @@ use_advanced_usbl                 = true
 [KalliyanTestConfig] # these are configurations of the test done
 
 test_name                         = "KalliyanTest"  # Test name should be the same for all beacons in the test
-num_pings_per_beacon              = 5
+#num_pings_per_beacon              = 5
 other_beacon_ids                  = [15] # a list of beacon ids that you'll be pinging in the test
-wait_for_response_timeout_seconds = 10
-use_advanced_usbl                 = true
+#wait_for_response_timeout_seconds = 10
+#use_advanced_usbl                 = true
 
 
 [SeatracConfig] # These are configurations set to the seatrac driver

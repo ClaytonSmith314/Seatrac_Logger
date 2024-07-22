@@ -32,16 +32,19 @@ class MyDriver : public SeatracDriver
     }
 };
 
+void skip_cin_line() {
+    while(std::cin.get() != '\n');
+}
 bool yn_answer() {
     while(true) {
         char yorn;
         if(scanf("%c", &yorn)) {
-            if(yorn == 'y') {std::cin.get(); return true;}
-            if(yorn == 'n') {std::cin.get(); return false;}
+            if(yorn == 'y') {skip_cin_line(); return true;}
+            if(yorn == 'n') {skip_cin_line(); return false;}
         }
-
+        skip_cin_line();
         std::cout << "Invalid response. Please enter 'y' or 'n': ";
-    }
+        }
 }
 
 int main(int argc, char *argv[]) {
@@ -69,10 +72,13 @@ int main(int argc, char *argv[]) {
 
         std::cout << "Retrieving Current Settings... ";
         SETTINGS_T settings = command::settings_get(seatrac).settings;
-        std::cout << "Done" << std::endl;
+        std::cout << "Done" << std::endl << std::endl;
+
+        std::cout << "View current settings (y/n)? ";
+        if(yn_answer()) std::cout << settings << std::endl << std::endl;
 
         // Change beacon id
-        std::cout << "Current Beacon Id: " << settings.xcvrBeaconId << std::endl
+        std::cout << "Current Beacon Id: " << (int)settings.xcvrBeaconId << std::endl
                   << "Change Beacon Id (y/n)? ";
         if(yn_answer()) {
             int bid;
@@ -84,8 +90,28 @@ int main(int argc, char *argv[]) {
             }
             std::cin.get();
             std::cout << "Setting Beacon Id to " << bid << "... ";
-            command::set_beacon_id(seatrac, (BID_E)bid);
-            std::cout << "done" << std::endl;
+            settings.xcvrBeaconId = (BID_E) bid;
+            command::settings_set(seatrac, settings);
+            std::cout << "done" << std::endl << std::endl;
+        }
+
+        // Change Env Salinity Settings
+        std::cout << "Current Water Salinity Setting: " << settings.envSalinity/10.0 << " ppt" << std::endl
+                  << "Fresh water has salinity of 0 ppt. Salt water has salinity of 35 ppt." << std::endl
+                  << "Change Water Salinity Setting (y/n)? ";
+        if(yn_answer()) {
+            float sal;
+            while(true) {
+                std::cout << "Enter New Salinity (float): ";
+                if(scanf("%f", &sal)) break;
+                while(std::cin.get()!='\n');
+                std::cout << "Invalid Salinity. Salinity should be a float." << std::endl;
+            }
+            std::cin.get();
+            std::cout << "Setting Salinity to " << sal << " ppt... ";
+            settings.envSalinity = (int)(sal*10);
+            command::settings_set(seatrac, settings);
+            std::cout << "done" << std::endl << std::endl;
         }
 
         //TODO: add config loag section
@@ -106,7 +132,7 @@ int main(int argc, char *argv[]) {
             std::cout << "done" << std::endl;
         }
 
-        std::cout << "Beacon setup complete" << std::endl;
+        std::cout << std::endl << "Beacon setup complete" << std::endl;
         }
 
         std::cout << std::endl << "Setup another beacon (y/n)? ";
@@ -120,41 +146,3 @@ int main(int argc, char *argv[]) {
         // std::cout << "Upload from config file (u) or enter manually (m)? ";
         // std::cout << "Path to Config File (blank for default './seatrac_logger_config.toml'): ";
 
-// int main(int argc, char *argv[])
-// {
-//     std::string serial_port = "/dev/ttyUSB0";
-//     MyDriver seatrac(serial_port);
-//     command::status_config_set(seatrac, (STATUS_BITS_E)0x0);
-
-//     int action;
-//     std::cout << "Running Seatrac Modem Calibration:" << std::endl
-//               << "Which calibration procedure would you like to execute?" << std::endl
-//               << "\t1) Magnetometer Calibration" << std::endl
-//               << "\t2) Accelerometer Calibration" << std::endl
-//               << "\t3) Both Magnetometer and Acceleromter Calibration" << std::endl
-//               << "\t4) Dry run - cal settings only saved to RAM, not EEPROM" << std::endl
-//               << "\t5 or more) Exit" << std::endl
-//               << "Enter a number: ";
-//     scanf("%d", &action);
-//     switch(action) {
-//         case 1: {
-//             calibration::calibrateMagnetometer(seatrac, std::cout, std::cin, true);
-//         } break;
-//         case 2: {
-//             calibration::calibrateAccelerometer(seatrac, std::cout, std::cin, true);
-//         } break;
-//         case 3: {
-//             calibration::calibrateMagnetometer(seatrac, std::cout, std::cin, true);
-//             calibration::calibrateAccelerometer(seatrac, std::cout, std::cin, true);
-//         } break;
-//         case 4: {
-//             calibration::calibrateMagnetometer(seatrac, std::cout, std::cin, false);
-//             calibration::calibrateAccelerometer(seatrac, std::cout, std::cin, false);
-//         } break;
-//         default: {
-//             std::cout << "Exiting Seatrac Modem Calibration" << std::endl;
-//         } break;
-//     }
-
-//     return 0;
-// }

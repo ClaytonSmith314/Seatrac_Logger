@@ -18,11 +18,9 @@ class SeatracPinger(Node):
         with open(CONFIG_FILE_PATH) as config_file:
             logger_config = toml.load(config_file)["DerekTestConfig"]
 
-            self.num_rounds_of_pings = logger_config["num_pings_per_beacon"]
             self.other_beacon_ids    = logger_config["other_beacon_ids"]
             self.use_advanced_usbl   = logger_config["use_advanced_usbl"]
-            self.timeout             = logger_config["wait_for_response_timeout_seconds"]
-
+            
         for beacon_id in self.other_beacon_ids:
             assert beacon_id>=1 and beacon_id<=15
 
@@ -52,8 +50,7 @@ class SeatracPinger(Node):
         if self.beacon_id_list_index >= len(self.other_beacon_ids):
             self.beacon_id_list_index = 0
             self.rounds_of_pings_sent += 1
-            if self.rounds_of_pings_sent > self.num_rounds_of_pings:
-                pass # TODO: kill the node here
+
 
     def modem_callback(self, response):
         if response.msg_id == CID_E.CID_PING_RESP:
