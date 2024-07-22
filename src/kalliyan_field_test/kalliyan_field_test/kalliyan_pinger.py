@@ -1,9 +1,7 @@
 
-import time
 import rclpy
 from rclpy.node import Node
 from seatrac_interfaces.msg import ModemSend, ModemRec
-#import toml
 from .seatrac_utils import CID_E, NAV_QUERY_E, CST_E
 
 CONFIG_FILE_PATH = "./seatrac_logger_config.toml"
@@ -14,11 +12,6 @@ class SeatracPinger(Node):
 
     def __init__(self):
         super().__init__('pinger')
-
-        # with open(CONFIG_FILE_PATH) as config_file:
-        #     logger_config = toml.load(config_file)["KalliyanTestConfig"]
-
-        #     self.other_beacon_ids    = logger_config["other_beacon_ids"]
             
         self.declare_parameter("beacon_ids_to_ping", [15])
 

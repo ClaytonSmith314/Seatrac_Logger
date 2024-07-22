@@ -1,9 +1,7 @@
 
-import time
 import rclpy
 from rclpy.node import Node
 from seatrac_interfaces.msg import ModemSend, ModemRec
-#import toml
 from .seatrac_utils import CID_E, AMSGTYPE_E, CST_E
 
 CONFIG_FILE_PATH = "./seatrac_logger_config.toml"
@@ -15,12 +13,6 @@ class SeatracPinger(Node):
     def __init__(self):
         super().__init__('pinger')
 
-        # with open(CONFIG_FILE_PATH) as config_file:
-        #     logger_config = toml.load(config_file)["DerekTestConfig"]
-
-        #     self.other_beacon_ids    = logger_config["other_beacon_ids"]
-        #     self.use_advanced_usbl   = logger_config["use_advanced_usbl"]
-
         self.declare_parameter("beacon_ids_to_ping", [15])
 
         self.other_beacon_ids = self.get_parameter("beacon_ids_to_ping").get_parameter_value().integer_array_value
@@ -28,12 +20,6 @@ class SeatracPinger(Node):
             
         for beacon_id in self.other_beacon_ids:
             assert beacon_id>=1 and beacon_id<=15
-
-        # if self.use_advanced_usbl:
-        #     self.msg_type = AMSGTYPE_E.MSG_REQX
-        # else:
-        #     self.msg_type = AMSGTYPE_E.MSG_REQU
-        self.msg_type = AMSGTYPE_E.MSG_REQX
 
         self.modem_publisher_  = self.create_publisher(ModemSend, 'modem_send', 10)
         self.modem_subscriber_ = self.create_subscription(ModemRec, 'modem_rec', self.modem_callback, 10)
@@ -48,7 +34,7 @@ class SeatracPinger(Node):
         request = ModemSend()
         request.msg_id      = CID_E.CID_PING_SEND
         request.dest_id     = self.other_beacon_ids[self.beacon_id_list_index]
-        request.msg_type    = self.msg_type
+        request.msg_type    = AMSGTYPE_E.MSG_REQX
 
         self.modem_publisher_.publish(request)
 
