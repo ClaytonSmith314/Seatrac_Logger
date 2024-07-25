@@ -5,8 +5,8 @@
   <version>1.0.0</version>
   <description>
     Two interfaces for the seatrac beacon: 
-      ModemRec - Ping or Data messages recieved from the beacon
-      ModemSend - Ping or Data commands sent to the beacon
+      ModemRec -  messages recieved from the beacon
+      ModemSend - acoustic transmission commands sent to the beacon
   </description>
   <maintainer email="claytonsmith3.14@gmail.com">Clayton Smith</maintainer>
   <license>Apache License 2.0</license>
