@@ -19,3 +19,7 @@ launch:
           - 4
           - 5
 
+- executable:
+    cmd: "ros2 bag record /modem_rec"
+    output: "screen"
+
