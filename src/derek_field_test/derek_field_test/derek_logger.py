@@ -6,6 +6,7 @@ import toml
 import rclpy
 from rclpy.node import Node
 from seatrac_interfaces.msg import ModemRec
+from .seatrac_utils import CID_E
 
 CONFIG_FILE_PATH = "./seatrac_logger_config.toml"
 
@@ -19,57 +20,40 @@ class SeatracLogger(Node):
         super().__init__('logger')
         self.modem_subscriber_ = self.create_subscription(ModemRec, 'modem_rec', self.modem_callback, 10)
 
-        if not os.path.exists("logger_data"):
-            os.mkdir("logger_data")
-        if not os.path.exists("logger_configurations"):
-            os.mkdir("logger_configurations")
+        if not os.path.exists("derek_logger_data"):
+            os.mkdir("derek_logger_data")
 
-        time_str = datetime.now().strftime("%Y-%m-%d_%H:%M:%S")
+        time_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-        #self.i=1
-
-        with open(CONFIG_FILE_PATH) as config_file:
-            config = toml.load(config_file)
-            test_name = config["LoggerConfig"]["test_name"]
-
-        with open(f"logger_configurations/{time_str}---{test_name}.toml", 'w') as config_save:
-            with open(CONFIG_FILE_PATH) as config_file:
-                config_save.write(config_file.read())
-
-        self.output_file = open(f"logger_data/{time_str}---{test_name}.csv", 'w')
+        self.output_file = open(f"derek_logger_data/{time_str}.csv", 'w')
         self.output_file.write(
-            "time, msg#, src_id, dest_id, local_flag, position_enhanced, position_flt_error, yaw, pitch, roll, local_depth, VOS, RSSI, usbl_rssi[0], usbl_rssi[1], usbl_rssi[2], usbl_rssi[3], range, azimuth, elevation, easting, northing, depth\n")
+            "remote_beacon_id, position_flt_error, yaw, pitch, roll, local_depth, VOS, RSSI, usbl_rssi[0], usbl_rssi[1], usbl_rssi[2], usbl_rssi[3], range_time, range_dist, azimuth, elevation, easting, northing, remote_depth\n")
 
     def modem_callback(self, response):
-        csv_line = (
-            str(time.time())                            +", "+
-            str(byte_list_to_int(response.packet_data)) +", "+
-            str(response.msg_id)                        +", "+
-            str(response.src_id)                        +", "+
-            str(response.dest_id)                       +", "+
-            str(response.local_flag)                    +", "+
-            str(response.position_enhanced)             +", "+
-            str(response.position_flt_error)            +", "+
-            str(response.attitude_yaw)                  +", "+
-            str(response.attitude_pitch)                +", "+
-            str(response.attitude_roll)                 +", "+
-            str(response.depth_local)                   +", "+
-            str(response.vos)                           +", "+
-            str(response.rssi)                          +", "+
-            str(response.usbl_rssi[0])                  +", "+
-            str(response.usbl_rssi[1])                  +", "+
-            str(response.usbl_rssi[2])                  +", "+
-            str(response.usbl_rssi[3])                  +", "+
-            str(response.range_dist)                    +", "+
-            str(response.usbl_azimuth)                  +", "+
-            str(response.usbl_elevation)                +", "+
-            str(response.usbl_fit_error)                +", "+
-            str(response.position_easting)              +", "+
-            str(response.position_northing)             +", "+
-            str(response.position_depth)                +"\n"
-        )
-        self.output_file.write(csv_line)
-        #self.i += 1
+        if(response.msg_id == CID_E.CID_PING_RESP):
+            csv_line = (
+                str(response.src_id)              +", "+
+                str(response.position_flt_error)  +", "+
+                str(response.attitude_yaw)        +", "+
+                str(response.attitude_pitch)      +", "+
+                str(response.attitude_roll)       +", "+
+                str(response.depth_local)         +", "+
+                str(response.vos)                 +", "+
+                str(response.rssi)                +", "+
+                str(response.usbl_rssi[0])        +", "+
+                str(response.usbl_rssi[1])        +", "+
+                str(response.usbl_rssi[2])        +", "+
+                str(response.usbl_rssi[3])        +", "+
+                str(response.range_time)          +", "+
+                str(response.range_dist)          +", "+
+                str(response.usbl_azimuth)        +", "+
+                str(response.usbl_elevation)      +", "+
+                str(response.usbl_fit_error)      +", "+
+                str(response.position_easting)    +", "+
+                str(response.position_northing)   +", "+
+                str(response.position_depth)      +"\n"
+            )
+            self.output_file.write(csv_line)
 
 
 def main(args=None):
