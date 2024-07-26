@@ -19,6 +19,11 @@ launch:
           - 4
           - 5
 
+- node:
+    pkg: "kalliyan_field_test"
+    exec: "kalliyan_logger"
+    name: "kalliyan_logger"
+
 - executable:
-    cmd: "ros2 bag record /modem_rec"
+    cmd: "ros2 bag record -o kalliyan_ros_bag /modem_rec"
     output: "screen"

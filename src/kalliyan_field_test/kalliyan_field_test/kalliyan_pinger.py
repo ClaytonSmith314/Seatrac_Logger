@@ -16,7 +16,6 @@ class SeatracPinger(Node):
         self.declare_parameter("beacon_ids_to_ping", [15])
 
         self.other_beacon_ids = self.get_parameter("beacon_ids_to_ping").get_parameter_value().integer_array_value
-        self.get_logger().info(str(self.other_beacon_ids))
 
         for beacon_id in self.other_beacon_ids:
             assert beacon_id>=1 and beacon_id<=15

@@ -19,7 +19,12 @@ launch:
           - 4
           - 5
 
+- node:
+    pkg: "derek_field_test"
+    exec: "derek_logger"
+    name: "derek_logger"
+
 - executable:
-    cmd: "ros2 bag record /modem_rec"
+    cmd: "ros2 bag record -o derek_ros_bag /modem_rec"
     output: "screen"
 

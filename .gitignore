@@ -2,6 +2,8 @@ build
 install
 log
 .vscode
-logger_configurations
-logger_data
+derek_logger_data
+kalliyan_logger_data
+derek_ros_bag
+kalliyan_ros_bag
 **/__pycache__

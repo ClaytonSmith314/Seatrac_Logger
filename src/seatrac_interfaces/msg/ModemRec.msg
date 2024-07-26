@@ -3,13 +3,14 @@ std_msgs/Header header
 # Definitions of Seatrac defined enums and types (ie CID_E, BID_E, CST_E, ...) can be found
 # in the Seatrac Developer Guide https://www.blueprintsubsea.com/downloads/seatrac/UM-140-D00221-07.pdf
 
-uint8 msg_id            # CIDE - Command Identification Code. Indicates the type of report recieved from the beacon.
+uint8 msg_id            # CID_E - Command Identification Code. Indicates the type of report recieved from the beacon.
                         # Different msg types include different information, and therefore populate different fields.
                         # Not all CID_E msg types are captured or supported in this ros message.
 
 bool  from_acoustic_tx  # True if this report was generated from an acoustic transmission successfully received from a remote beacon
                         # False if this report is a Status message or response to a command from the client program
 
+uint64 system_timestamp # The time since epoch counted on the client machine at the time this message was recieved in nanoseconds
 
 ### Command Status Code Fields ###
         # Command Status Codes tell you if a command executed sucessfully, and if not, what error the command encountered
@@ -34,8 +35,8 @@ uint16   vos          # Divide by 10 for velocity of sound in meters per second.
 ### Status Fields ###
         # This report is a Status message if CID_E msg_id = CID_STATUS = 0x10
         # Status messages can be generated at a user defined interval between 1 and 25 Hz
-bool   includes_status_timestamp
-uint64 timestamp  # time since beacon was last powered up in milliseconds
+bool   includes_beacon_timestamp
+uint64 beacon_timestamp  # time since beacon was last powered up in milliseconds
 
 bool   includes_status_env_fields
 uint16 supply_voltage  # Beacon's supply voltage. Divide by 1000 for value in Volts.

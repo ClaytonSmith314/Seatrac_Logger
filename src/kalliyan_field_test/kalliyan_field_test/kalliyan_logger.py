@@ -29,11 +29,12 @@ class SeatracLogger(Node):
 
         self.output_file = open(f"kalliyan_logger_data/{time_str}.csv", 'w')
         self.output_file.write(
-            "remote_beacon_id, position_flt_error, yaw, pitch, roll, local_depth, VOS, RSSI, range_time, range_dist, azimuth, elevation, easting, northing, remote_depth, remote_yaw, remote_pitch, remote_roll, remote_temp\n")
+            "timestamp, remote_beacon_id, position_flt_error, yaw, pitch, roll, local_depth, VOS, RSSI, range_time, range_dist, azimuth, elevation, easting, northing, remote_depth, remote_yaw, remote_pitch, remote_roll, remote_temp\n")
 
     def modem_callback(self, response):
-        if(response.msg_id == CID_E.CID_PING_RESP):
+        if(response.msg_id == CID_E.CID_NAV_QUERY_RESP):
             csv_line = (
+                str(response.system_timestamp)    +", "+
                 str(response.src_id)              +", "+
                 str(response.position_flt_error)  +", "+
                 str(response.attitude_yaw)        +", "+

@@ -20,6 +20,7 @@ using std::placeholders::_1;
 
 using namespace std::chrono_literals;
 using namespace narval::seatrac;
+using namespace std::chrono;
 
 //TODO: add ros parameters to setup beacon and driver node. At least serial port
 
@@ -42,6 +43,7 @@ public:
   void on_message(CID_E msgId, const std::vector<uint8_t> &data) {
     auto msg = seatrac_interfaces::msg::ModemRec();
     msg.msg_id = msgId;
+    msg.system_timestamp = duration_cast<nanoseconds>(system_clock::now().time_since_epoch()).count();
     switch (msgId) {
       default: {
         //RCLCPP_INFO(this->get_logger(), "Received unknown message from seatrac modem. msgId: %d", msgId); 
@@ -185,8 +187,8 @@ public:
       case CID_STATUS: {
         messages::Status report;
         report = data;
-        msg.includes_status_timestamp = true;
-        msg.timestamp = report.timestamp;
+        msg.includes_beacon_timestamp = true;
+        msg.beacon_timestamp = report.timestamp;
         if(report.contentType & ENVIRONMENT) {
           msg.includes_status_env_fields = true;
           msg.supply_voltage = report.environment.envSupply;

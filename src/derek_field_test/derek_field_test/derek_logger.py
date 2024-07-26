@@ -27,11 +27,12 @@ class SeatracLogger(Node):
 
         self.output_file = open(f"derek_logger_data/{time_str}.csv", 'w')
         self.output_file.write(
-            "remote_beacon_id, position_flt_error, yaw, pitch, roll, local_depth, VOS, RSSI, usbl_rssi[0], usbl_rssi[1], usbl_rssi[2], usbl_rssi[3], range_time, range_dist, azimuth, elevation, easting, northing, remote_depth\n")
+            "timestamp, remote_beacon_id, position_flt_error, yaw, pitch, roll, local_depth, VOS, RSSI, usbl_rssi[0], usbl_rssi[1], usbl_rssi[2], usbl_rssi[3], range_time, range_dist, azimuth, elevation, easting, northing, remote_depth\n")
 
     def modem_callback(self, response):
         if(response.msg_id == CID_E.CID_PING_RESP):
             csv_line = (
+                str(response.system_timestamp)    +", "+
                 str(response.src_id)              +", "+
                 str(response.position_flt_error)  +", "+
                 str(response.attitude_yaw)        +", "+
