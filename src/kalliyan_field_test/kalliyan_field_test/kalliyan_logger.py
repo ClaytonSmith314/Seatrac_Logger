@@ -1,6 +1,5 @@
 
 import os
-import time
 from datetime import datetime
 import rclpy
 from rclpy.node import Node
@@ -13,14 +12,14 @@ class SeatracLogger(Node):
         super().__init__('logger')
         self.modem_subscriber_ = self.create_subscription(ModemRec, 'modem_rec', self.modem_callback, 10)
 
-        if not os.path.exists("kalliyan_logger_data"):
-            os.mkdir("kalliyan_logger_data")
+        if not os.path.exists("_kalliyan_folder"):
+            os.mkdir("_kalliyan_folder")
+        if not os.path.exists("_kalliyan_folder/csv_data"):
+            os.mkdir("_kalliyan_folder/csv_data")
 
         time_str = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
-        test_name = "KalliyanTest"
-
-        self.output_file = open(f"kalliyan_logger_data/{time_str}.csv", 'w')
+        self.output_file = open(f"_kalliyan_folder/csv_data/{time_str}.csv", 'w')
         self.output_file.write(
             "timestamp, remote_beacon_id, position_flt_error, yaw, pitch, roll, local_depth, VOS, RSSI, range_time, range_dist, azimuth, elevation, easting, northing, remote_depth, remote_yaw, remote_pitch, remote_roll, remote_temp\n")
 
