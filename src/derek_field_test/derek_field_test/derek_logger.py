@@ -2,17 +2,10 @@
 import os
 import time
 from datetime import datetime
-import toml
 import rclpy
 from rclpy.node import Node
 from seatrac_interfaces.msg import ModemRec
 from .seatrac_utils import CID_E
-
-CONFIG_FILE_PATH = "./seatrac_logger_config.toml"
-
-
-def byte_list_to_int(bl):
-    return (bl[0] << 24) | (bl[1] << 16) | (bl[2] << 8) | bl[3]
 
 class SeatracLogger(Node):
 
